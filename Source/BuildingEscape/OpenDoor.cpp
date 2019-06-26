@@ -3,6 +3,8 @@
 
 #include "OpenDoor.h"
 #include "GameFramework\Actor.h"
+#include "Engine\World.h"
+#include "GameFramework\PlayerController.h"
 
 // Sets default values for this component's properties
 UOpenDoor::UOpenDoor()
@@ -20,6 +22,8 @@ void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	//Get the pawn of the player and assign that to the actor that opens, so that the player can trigger the door volume trigger
+	actorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
 }
 
 
@@ -40,8 +44,7 @@ void UOpenDoor::openTheDoor() {
 	AActor *owner = GetOwner();
 
 	//Create a rotator
-	FRotator rotator;
-	rotator.Yaw = 90;
+	FRotator rotator = FRotator(0.0f, 90.0f, 0.0f);
 
 	//set door rotation
 	owner->SetActorRotation(rotator);
