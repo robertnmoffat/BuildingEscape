@@ -19,7 +19,23 @@ UOpenDoor::UOpenDoor()
 void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
+	
+}
 
+
+// Called every frame
+void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	
+	//Poll trigger volume every frame
+	if (pressurePlate->IsOverlappingActor(actorThatOpens)) {
+		openTheDoor();
+	}
+
+}
+
+void UOpenDoor::openTheDoor() {
 	//Find owning actor
 	AActor *owner = GetOwner();
 
@@ -29,15 +45,5 @@ void UOpenDoor::BeginPlay()
 
 	//set door rotation
 	owner->SetActorRotation(rotator);
-	
-}
-
-
-// Called every frame
-void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }
 
